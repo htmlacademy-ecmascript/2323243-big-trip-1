@@ -24,7 +24,8 @@ const boardPresenter = new BoardPresenter({
   destinationsModel,
   offersModel,
   pointsModel,
-  filterModel
+  filterModel,
+  newPointButtonContainer: tripMainElement
 });
 
 const filterPresenter = new FilterPresenter({

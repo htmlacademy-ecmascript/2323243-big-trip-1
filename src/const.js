@@ -76,6 +76,11 @@ const UpdateType = {
   MAJOR: 'MAJOR'
 };
 
+const EditType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING'
+};
+
 export {
   POINT_EMPTY,
   DESCRIPTIONS,
@@ -86,5 +91,6 @@ export {
   FilterType,
   SortType,
   UserAction,
-  UpdateType
+  UpdateType,
+  EditType
 };

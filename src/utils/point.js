@@ -14,6 +14,7 @@ const MIN_IN_HOUR = 60;
 const HOUR_IN_DAY = 24;
 const DAY_FORMAT = 'MMM DD';
 const TIME_FORMAT = 'HH:mm';
+const DATA_TIME = 'DD/MM/YY HH:mm';
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
@@ -22,11 +23,15 @@ function formatStringToDateTime(data) {
 }
 
 function formatStringToShotrDate(data) {
-  return dayjs(data).format('MMM DD');
+  return dayjs(data).format(DAY_FORMAT);
+}
+
+function humanizePointDueDateTime(dueDate) {
+  return dueDate ? dayjs(dueDate).format(DATA_TIME) : '';
 }
 
 function formatStringToTime(data) {
-  return dayjs(data).format('HH:mm');
+  return dayjs(data).format(TIME_FORMAT);
 }
 
 function getPointDuration(dateFrom, dateTo) {
@@ -120,5 +125,6 @@ export {
   getPointsDateDifference,
   getPointsPriceDifference,
   getPointsDurationDifference,
-  isDateEqual
+  isDateEqual,
+  humanizePointDueDateTime
 };
