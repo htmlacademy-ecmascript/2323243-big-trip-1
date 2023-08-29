@@ -3,7 +3,7 @@ import { remove, render, RenderPosition, replace } from '../framework/render.js'
 import NoPointView from '../view/no-point-view.js';
 import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
-import { SortType, UpdateType, UserAction } from '../const.js';
+import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
 import { sort } from '../utils/sort.js';
 import { filter } from '../utils/filter.js';
 
@@ -15,10 +15,11 @@ export default class BoardPresenter {
   #offersModel = null;
   #pointsModel = null;
   #sortComponent = null;
-  #noPointComponent = new NoPointView();
+  #noPointComponent = null;
   #pointPresenters = new Map();
   #currentSortType = SortType.DAY;
   #filterModel = null;
+  #filterType = FilterType.EVERYTHING;
 
 
   constructor({ boardContainer, destinationsModel, offersModel, pointsModel, filterModel }) {
@@ -33,8 +34,8 @@ export default class BoardPresenter {
   }
 
   get points() {
-    const filterType = this.#filterModel.filter;
-    const filteredPoints = filter[filterType](this.#pointsModel.points);
+    this.#filterType = this.#filterModel.filter;
+    const filteredPoints = filter[this.#filterType](this.#pointsModel.points);
     return sort[this.#currentSortType](filteredPoints);
   }
 
@@ -112,11 +113,19 @@ export default class BoardPresenter {
 
 
   #renderNoPoints() {
+    this.#noPointComponent = new NoPointView({
+      filterType: this.#filterType
+    });
+
     render(this.#noPointComponent, this.#boardContainer);
   }
 
   #clearBoard({ resetSortType = false } = {}) {
     this.#clearPointList();
+
+    if (this.#noPointComponent) {
+      remove(this.#noPointComponent);
+    }
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
