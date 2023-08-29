@@ -5,6 +5,7 @@ import SortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import { sort } from '../utils/sort.js';
+import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
 
@@ -17,19 +18,24 @@ export default class BoardPresenter {
   #noPointComponent = new NoPointView();
   #pointPresenters = new Map();
   #currentSortType = SortType.DAY;
+  #filterModel = null;
 
 
-  constructor({ boardContainer, destinationsModel, offersModel, pointsModel }) {
+  constructor({ boardContainer, destinationsModel, offersModel, pointsModel, filterModel }) {
     this.#boardContainer = boardContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
+    this.#filterModel = filterModel;
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get points() {
-    return sort[this.#currentSortType]([...this.#pointsModel.points]);
+    const filterType = this.#filterModel.filter;
+    const filteredPoints = filter[filterType](this.#pointsModel.points);
+    return sort[this.#currentSortType](filteredPoints);
   }
 
   init() {
@@ -113,7 +119,7 @@ export default class BoardPresenter {
     this.#clearPointList();
 
     if (resetSortType) {
-      this.#currentSortType = SortType.DEFAULT;
+      this.#currentSortType = SortType.DAY;
     }
   }
 
