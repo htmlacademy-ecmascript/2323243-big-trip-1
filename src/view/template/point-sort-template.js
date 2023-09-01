@@ -1,5 +1,5 @@
 function getSortItem(sortItem) {
-  return (/* html */`
+  return (`
     <div class="trip-sort__item  trip-sort__item--${sortItem.type}">
       <input id="sort-${sortItem.type}"
         class="trip-sort__input  visually-hidden"

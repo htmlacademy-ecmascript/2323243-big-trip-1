@@ -1,6 +1,6 @@
 function createPicturiesOfDestination(pictures) {
   return (
-    pictures.map((image) => /*html*/ `<img class="event__photo" src="${image.src}" alt="${image.description}">`));
+    pictures.map((image) => `<img class="event__photo" src="${image.src}" alt="${image.description}">`));
 }
 
 function createDistinationsList(pointDestination) {

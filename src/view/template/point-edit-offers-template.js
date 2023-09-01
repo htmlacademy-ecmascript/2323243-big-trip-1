@@ -1,6 +1,6 @@
 function createOffersList(point, pointOffers, { type }) {
   return (
-    pointOffers.find((el) => el.type === type).offers.map((offer) => /* html */
+    pointOffers.find((el) => el.type === type).offers.map((offer) =>
       `<div class="event__offer-selector">
       <input class="event__offer-checkbox  visually-hidden"
       id="event-offer-luggage-${offer.id}" type="checkbox"

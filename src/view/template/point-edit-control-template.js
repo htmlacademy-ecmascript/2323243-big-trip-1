@@ -1,4 +1,4 @@
-import { EditType } from '../const.js';
+import { EditType } from '../../const.js';
 
 const ButtonLabel = {
   [EditType.EDITING]: 'Delete',
@@ -16,7 +16,7 @@ function createRollupButtonTemplate() {
   </button>`;
 }
 
-function createPointEditControlsTemplate({ typeButton: type }) {
+function createPointEditControlsTemplate({ type }) {
   return `
     <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
     ${createDeleteButtonTemplate({ type })}

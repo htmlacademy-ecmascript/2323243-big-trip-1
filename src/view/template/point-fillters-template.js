@@ -1,5 +1,5 @@
 function createFilterItem({ type, hasPoints }, currentFilterType) {
-  return (/* html */`
+  return (`
     <div class="trip-filters__filter" >
         <input
           id="filter-${type}"

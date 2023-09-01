@@ -11,7 +11,7 @@ function createPointEditTemplate({ state, pointDestinations, pointOffers, typeBu
   const pointDestination = pointDestinations.find((dest) => dest.id === destination);
   const currentOffers = createOffersList(point, pointOffers, { type });
 
-  return (/* html */`
+  return (`
   <li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">

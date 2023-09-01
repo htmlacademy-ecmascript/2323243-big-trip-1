@@ -1,5 +1,5 @@
 function createTyItem(types) {
-  return types.map((type, index) => /* html */ `
+  return types.map((type, index) => `
     <div class="event__type-item">
       <input id="event-type-${type}-${index}"
       class="event__type-input  visually-hidden"
@@ -13,7 +13,7 @@ function createTyItem(types) {
 }
 
 function createTypeList({ type }, types) {
-  return (/* html */`
+  return (`
       <div class="event__type-wrapper">
       <label class="event__type  event__type-btn" for="event-type-toggle-1">
         <span class="visually-hidden">Choose event type</span>

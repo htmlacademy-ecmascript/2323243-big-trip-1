@@ -3,7 +3,7 @@ import {
   formatStringToShotrDate,
   formatStringToTime,
   getPointDuration
-} from '../utils/point.js';
+} from '../../utils/point.js';
 
 
 function createPointTemplate({ point, pointDestination, pointOffers }) {
@@ -25,7 +25,7 @@ function createPointTemplate({ point, pointDestination, pointOffers }) {
     );
   }
 
-  return (/* html */
+  return (
     `<li class="trip-events__item">
     <div class="event">
       <time class="event__date" datetime="${formatStringToDateTime(dateFrom)}">
