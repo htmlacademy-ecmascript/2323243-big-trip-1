@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { createFilterTemplate } from '../template/point-fillters-template.js';
+import { createFilterTemplate } from './template/point-fillters-template.js';
 
 export default class FilterView extends AbstractView {
 

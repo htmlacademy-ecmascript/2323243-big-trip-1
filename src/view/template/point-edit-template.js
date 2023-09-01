@@ -1,14 +1,14 @@
-import { CITIES, TYPES } from '../const.js';
+import { CITIES, TYPES } from '../../const.js';
 import { createOffersList } from './point-edit-offers-template.js';
 import { createDistinationsList } from './point-edit-distination-template.js';
 import { createTypeList } from './point-edit-type-list.js';
 import { createPointEditControlsTemplate } from './point-edit-control-template.js';
-import { humanizePointDueDateTime } from '../utils/point.js';
+import { humanizePointDueDateTime } from '../../utils/point.js';
 
 function createPointEditTemplate({ state, pointDestinations, pointOffers, typeButton }) {
   const { point } = state;
   const { basePrice, dateFrom, dateTo, destination, type } = point;
-  const pointDestination = pointDestinations.find((dest) => dest.id === destination);
+  const pointDestination = pointDestinations.find((currentDestination) => currentDestination.id === destination);
   const currentOffers = createOffersList(point, pointOffers, { type });
 
   return (`

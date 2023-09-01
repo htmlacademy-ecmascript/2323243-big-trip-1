@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { createPointEditTemplate } from '../template/point-edit-template.js';
+import { createPointEditTemplate } from './template/point-edit-template.js';
 import { EditType, POINT_EMPTY } from '../const.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';

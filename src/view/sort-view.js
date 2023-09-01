@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { createSortTemplate } from '../template/point-sort-template.js';
+import { createSortTemplate } from './template/point-sort-template.js';
 import { SortType } from '../const.js';
 
 const enabledSortType = {
