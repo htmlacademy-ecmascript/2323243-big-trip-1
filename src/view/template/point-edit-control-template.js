@@ -16,7 +16,7 @@ function createRollupButtonTemplate() {
   </button>`;
 }
 
-function createPointEditControlsTemplate({ type }) {
+function createPointEditControlsTemplate(type) {
   return `
     <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
     ${createDeleteButtonTemplate({ type })}

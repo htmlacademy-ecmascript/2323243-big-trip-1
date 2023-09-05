@@ -96,8 +96,22 @@ export default class PointEditView extends AbstractStatefulView {
 
   #formSubmitHandler = (evt) => {
     evt.preventDefault();
-    this.#onSubmitClick(PointEditView.parseStateToPoint(this._state));
+    const dateFromInput = this.element.querySelector('#event-start-time-1');
+    const dateToInput = this.element.querySelector('#event-end-time-1');
+
+    if (!dateFromInput.value) {
+      return;
+    }
+
+    if (!dateToInput.value) {
+      return;
+    }
+    if (this.#isDestinationValide()){
+      this.#onSubmitClick(PointEditView.parseStateToPoint(this._state));
+    }
   };
+
+  #isDestinationValide = () => this.#pointDestinations.find((destination) => destination.id === this._state.point.destination);
 
   #resetButtonClickHandler = (evt) => {
     evt.preventDefault();

@@ -52,6 +52,7 @@ export default class PointPresenter {
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
+      // может можно удалить вторую часть
       render(this.#pointComponent, this.#pointListContainer);
       return;
     }

@@ -1,6 +1,6 @@
 import { CITIES, TYPES } from '../../const.js';
 import { createOffersList } from './point-edit-offers-template.js';
-import { createDistinationsList } from './point-edit-distination-template.js';
+import { createDistinationsList } from './point-edit-destination-template.js';
 import { createTypeList } from './point-edit-type-list.js';
 import { createPointEditControlsTemplate } from './point-edit-control-template.js';
 import { humanizePointDueDateTime } from '../../utils/point.js';
@@ -10,6 +10,20 @@ function createPointEditTemplate({ state, pointDestinations, pointOffers, typeBu
   const { basePrice, dateFrom, dateTo, destination, type } = point;
   const pointDestination = pointDestinations.find((currentDestination) => currentDestination.id === destination);
   const currentOffers = createOffersList(point, pointOffers, { type });
+
+  /* const form = document.querySelector('.event__input--time'); // Найдем форму редактирования
+
+ // Добавим обработчик события отправки формы
+  form.addEventListener('submit', (event) => {
+    const startTimeInput = document.getElementById('event-start-time-1');
+    const endTimeInput = document.getElementById('event-end-time-1');
+
+    // Проверяем, пусты ли оба поля
+    if (!startTimeInput.value.trim() || !endTimeInput.value.trim()) {
+      event.preventDefault(); // Отменяет отправку формы, если даты не заполнены
+      alert('Please enter date and time.'); // Выводит сообщение об ошибке
+    }
+  }); */
 
   return (`
   <li class="trip-events__item">
@@ -43,10 +57,11 @@ function createPointEditTemplate({ state, pointDestinations, pointOffers, typeBu
             <span class="visually-hidden">Price</span>
             &euro;
           </label>
-          <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
+          <input class="event__input  event__input--price" id="event-price-1" type="number"
+            name="event-price" min="0" value="${basePrice}">
         </div>
 
-        ${createPointEditControlsTemplate({ typeButton })}
+        ${createPointEditControlsTemplate(typeButton)}
       </header>
 
       <section class="event__details">
