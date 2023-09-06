@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
-* Студент: [German Burdin](https://up.htmlacademy.ru/ecmascript-individual/1/user/2323243).
-* Наставник: `Неизвестно`.
+* Студент: [German Burdin](https://up.htmlacademy.ru/ecmascript/20/user/2323243).
+* Наставник: `Alexander Gorbunov`.
 
 ---
 
@@ -48,5 +48,5 @@ git clone SSH-адрес_вашего_форка
 
 Репозиторий создан для обучения на профессиональном курсе «[JavaScript. Архитектура клиентских приложений](https://htmlacademy.ru/intensive/ecmascript)» от [HTML Academy](https://htmlacademy.ru).
 
-[check-image]: https://github.com/htmlacademy-ecmascript/2323243-big-trip-1/workflows/Project%20check/badge.svg?branch=master
-[check-url]: https://github.com/htmlacademy-ecmascript/2323243-big-trip-1/actions
+[check-image]: https://github.com/htmlacademy-ecmascript/2323243-big-trip-20/workflows/Project%20check/badge.svg?branch=master
+[check-url]: https://github.com/htmlacademy-ecmascript/2323243-big-trip-20/actions
