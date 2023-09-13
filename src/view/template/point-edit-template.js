@@ -11,20 +11,6 @@ function createPointEditTemplate({ state, pointDestinations, pointOffers, typeBu
   const pointDestination = pointDestinations.find((currentDestination) => currentDestination.id === destination);
   const currentOffers = createOffersList(point, pointOffers, { type });
 
-  /* const form = document.querySelector('.event__input--time'); // Найдем форму редактирования
-
- // Добавим обработчик события отправки формы
-  form.addEventListener('submit', (event) => {
-    const startTimeInput = document.getElementById('event-start-time-1');
-    const endTimeInput = document.getElementById('event-end-time-1');
-
-    // Проверяем, пусты ли оба поля
-    if (!startTimeInput.value.trim() || !endTimeInput.value.trim()) {
-      event.preventDefault(); // Отменяет отправку формы, если даты не заполнены
-      alert('Please enter date and time.'); // Выводит сообщение об ошибке
-    }
-  }); */
-
   return (`
   <li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
