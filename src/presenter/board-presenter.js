@@ -211,7 +211,6 @@ export default class BoardPresenter {
 
     if (this.#isLoading) {
       this.#renderLoading();
-      return;
     }
   }
 

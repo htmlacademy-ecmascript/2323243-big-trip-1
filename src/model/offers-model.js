@@ -1,4 +1,4 @@
-export default class OffersModel {
+/* export default class OffersModel {
 
   #service = null;
   #offers = null;
@@ -16,4 +16,4 @@ export default class OffersModel {
     return this.#offers
       .find((offer) => offer.type === type).offers;
   }
-}
+} */

@@ -17,7 +17,7 @@ const tripFilltersElement = document.querySelector('.trip-controls__filters');
 const mainContentElement = document.querySelector('.trip-events');
 
 const mockService = new MockService();
-const destinationsModel = new DestinationsModel(mockService);
+const destinationsModel = new DestinationsModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const pointsModel = new PointsModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const offersModel = new OffersModel(mockService);
 const filterModel = new FilterModel();

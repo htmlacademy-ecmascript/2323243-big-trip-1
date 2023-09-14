@@ -1,12 +1,11 @@
-export default class DestinationsModel {
+/* export default class DestinationsModel {
 
-  #destinations = null;
-  #service = null;
+  #destinations = [];
+  #pointsApiService = null;
 
   constructor(service) {
-    this.#service = service;
-    this.#destinations = this.#service.destinations;
-    console.log(this.#destinations);
+    this.#pointsApiService = service;
+    this.#destinations = this.#pointsApiService.destinations;
   }
 
   get destinations() {
@@ -48,3 +47,4 @@ export default class DestinationsModel {
     return result;
   }
 }
+ */

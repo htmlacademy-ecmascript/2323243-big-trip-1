@@ -8,13 +8,19 @@ const Method = {
 };
 
 export default class PointsApiService extends ApiService {
-  async getPoints() {
-    const response = await this._load({
-      url: 'points'
-    });
-    const parsedResponse = await ApiService.parseResponse(response);
+  get points() {
+    return this._load({url: 'points'})
+      .then(ApiService.parseResponse);
+  }
 
-    return parsedResponse;
+  get offers() {
+    return this._load({url: 'offers'})
+      .then(ApiService.parseResponse);
+  }
+
+  get destinations() {
+    return this._load({url: 'destinations'})
+      .then(ApiService.parseResponse);
   }
 
   async updatePoint(point) {
