@@ -1,4 +1,4 @@
-import { getDate } from '../utils/point.js';
+/* import { getDate } from '../utils/point.js';
 import { getRandomInteger } from '../utils/common.js';
 
 function generatePoint(type, descriptionId, offersIds) {
@@ -17,3 +17,4 @@ function generatePoint(type, descriptionId, offersIds) {
 
 
 export { generatePoint };
+ */

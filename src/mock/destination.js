@@ -1,4 +1,4 @@
-import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
+/* import { getRandomArrayElement, getRandomInteger } from '../utils/common.js';
 import { DESCRIPTIONS, CITIES } from '../const.js';
 
 const PICTURES_COUNT = 5;
@@ -22,3 +22,4 @@ function generateDestination() {
 }
 
 export { generateDestination };
+ */

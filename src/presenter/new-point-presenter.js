@@ -3,84 +3,87 @@ import { UserAction, UpdateType, EditType } from '../const.js';
 import PointEditView from '../view/point-edit-view.js';
 
 export default class NewPointPresenter {
-
   #pointListContainer = null;
-  #handleDataChange = null;
-  #handleDestroy = null;
-  #pointNewComponent = null;
-  #destinationsModel = [];
-  #offersModel = [];
+  #changeData = null;
+  #pointEditComponent = null;
+  #destroyCallback = null;
+  #offers = null;
+  #destinations = null;
 
-  constructor({ pointListContainer, onDataChange, onDestroy, destinationsModel, offersModel }) {
+  constructor(pointListContainer, changeData) {
     this.#pointListContainer = pointListContainer;
-    this.#handleDataChange = onDataChange;
-    this.#handleDestroy = onDestroy;
-    this.#destinationsModel = destinationsModel;
-    this.#offersModel = offersModel;
+    this.#changeData = changeData;
   }
 
-  init() {
-    if (this.#pointNewComponent !== null) {
+  init = (callback, offers, destinations) => {
+    this.#offers = offers;
+    this.#destinations = destinations;
+    this.#destroyCallback = callback;
+
+    if (this.#pointEditComponent !== null) {
       return;
     }
 
-    this.#pointNewComponent = new PointEditView({
-      pointDestinations: this.#destinationsModel.destinations,
-      pointOffers: this.#offersModel.offers,
-      type: EditType.CREATING,
-      onFormSubmit: this.#handleFormSubmit,
-      onResetClick: this.#resetClickHandler
-    });
+    this.#pointEditComponent = new PointEditView(undefined, this.#offers, this.#destinations);
+    this.#pointEditComponent.setPointSaveHandler(this.#handlePointSave);
+    this.#pointEditComponent.setDeleteClickHandler(this.#handlePointDelete);
+    this.#pointEditComponent.setPointRollUpHandler(this.#handlePointClick);
 
-    render(this.#pointNewComponent, this.#pointListContainer, RenderPosition.AFTERBEGIN);
+    render(this.#pointEditComponent, this.#pointListContainer, RenderPosition.AFTERBEGIN);
 
     document.addEventListener('keydown', this.#escKeyDownHandler);
-  }
+  };
 
-
-  destroy = (isCanceled) => {
-    if (this.#pointNewComponent === null) {
+  destroy = () => {
+    if (this.#pointEditComponent === null) {
       return;
     }
 
-    this.#handleDestroy(isCanceled);
+    this.#destroyCallback?.();
 
-    remove(this.#pointNewComponent);
-    this.#pointNewComponent = null;
+    remove(this.#pointEditComponent);
+    this.#pointEditComponent = null;
 
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
-  setSaving() {
-    this.#pointNewComponent.updateElement({
-      isDisabled: true,
-      isSaving: true,
-    });
-  }
+  setSaving = () => {
+    this.#pointEditComponent.updateElement(
+      {
+        isDisabled: true,
+        isSaving: true,
+      }
+    );
+  };
 
-  setAborting() {
+  setAborting = () => {
     const resetFormState = () => {
-      this.#pointNewComponent.updateElement({
+      this.#pointEditComponent.updateElement({
         isDisabled: false,
         isSaving: false,
         isDeleting: false,
       });
     };
 
-    this.#pointNewComponent.shake(resetFormState);
-  }
-
-  #handleFormSubmit = (point) => {
-    this.#handleDataChange(
-      UserAction.ADD_POINT,
-      UpdateType.MINOR,
-      point
-    );
-    this.destroy(false);
+    this.#pointEditComponent.shake(resetFormState);
   };
 
-  #resetClickHandler = () => {
-    this.destroy(true); //оставить?
+  #handlePointSave = (point) => {
+    this.#changeData(
+      UserAction.ADD_POINT,
+      UpdateType.MINOR,
+      point,
+    );
+  };
+
+  #handlePointDelete = () => {
+    this.destroy();
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
+  #handlePointClick = () => {
+    this.destroy();
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #escKeyDownHandler = (evt) => {

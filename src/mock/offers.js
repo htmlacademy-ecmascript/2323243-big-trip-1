@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../utils/common.js';
+/* import {getRandomInteger} from '../utils/common.js';
 
 function generateOffer(type) {
   return {
@@ -9,3 +9,4 @@ function generateOffer(type) {
 }
 
 export { generateOffer };
+ */

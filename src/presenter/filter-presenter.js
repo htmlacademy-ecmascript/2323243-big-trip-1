@@ -1,20 +1,19 @@
 import { render, replace, remove } from '../framework/render.js';
-import FilterView from '../view/fillters-view.js';
-import { filter } from '../utils/filter.js';
-import { UpdateType } from '../const.js';
+import FilterView from '../view/filters-view.js';
+import { Filter } from '../utils/filter.js';
+import { FilterType, UpdateType } from '../const.js';
 
 export default class FilterPresenter {
-
-  #pointsModel = null;
   #filterContainer = null;
   #filterModel = null;
+  #pointsModel = null;
+
   #filterComponent = null;
 
-
-  constructor({ filterContainer, filterModel, pointsModel }) {
+  constructor(filterContainer, filterModel, pointsModel) {
     this.#filterContainer = filterContainer;
-    this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
+    this.#pointsModel = pointsModel;
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
@@ -23,21 +22,31 @@ export default class FilterPresenter {
   get filters() {
     const points = this.#pointsModel.points;
 
-    return Object.entries(filter)
-      .map(([filterType, filterPoints]) => ({
-        type: filterType,
-        hasPoints: filterPoints(points).length > 0
-      }));
+    return [
+      {
+        type: FilterType.EVERYTHING,
+        name: 'everything',
+        count: Filter[FilterType.EVERYTHING](points).length,
+      },
+      {
+        type: FilterType.FUTURE,
+        name: 'future',
+        count: Filter[FilterType.FUTURE](points).length,
+      },
+      {
+        type: FilterType.PAST,
+        name: 'past',
+        count: Filter[FilterType.PAST](points).length,
+      },
+    ];
   }
 
-  init() {
+  init = () => {
+    const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
-    this.#filterComponent = new FilterView({
-      filters: this.filters,
-      currentFilterType: this.#filterModel.filter,
-      onFilterTypeChange: this.#handleFilterTypeChange
-    });
+    this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
+    this.#filterComponent.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
 
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
@@ -46,7 +55,7 @@ export default class FilterPresenter {
 
     replace(this.#filterComponent, prevFilterComponent);
     remove(prevFilterComponent);
-  }
+  };
 
   #handleModelEvent = () => {
     this.init();
