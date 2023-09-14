@@ -23,56 +23,56 @@ export default class PointsApiService extends ApiService {
       .then(ApiService.parseResponse);
   }
 
-  async updatePoint(point) {
+  updatePoint = async (point) => {
+
     const response = await this._load({
       url: `points/${point.id}`,
       method: Method.PUT,
       body: JSON.stringify(this.#adaptToServer(point)),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
+      headers: new Headers({'Content-Type': 'application/json'}),
     });
 
     const parsedResponse = await ApiService.parseResponse(response);
 
     return parsedResponse;
-  }
+  };
 
-  async addPoint(point) {
+  addPoint = async (point) => {
     const response = await this._load({
       url: 'points',
       method: Method.POST,
       body: JSON.stringify(this.#adaptToServer(point)),
-      headers: new Headers({ 'Content-Type': 'application/json' }),
+      headers: new Headers({'Content-Type': 'application/json'}),
     });
 
     const parsedResponse = await ApiService.parseResponse(response);
 
     return parsedResponse;
-  }
+  };
 
-  async deletePoint(point) {
+  deletePoint = async (point) => {
     const response = await this._load({
       url: `points/${point.id}`,
       method: Method.DELETE,
     });
 
     return response;
-  }
+  };
 
-  #adaptToServer(point) { // надо поправить
-    const adaptedPoint = {
-      ...point,
-      'due_date': point.dueDate instanceof Date ? point.dueDate.toISOString() : null, // На сервере дата хранится в ISO формате
-      'is_archived': point.isArchive,
+  #adaptToServer = (point) => {
+
+    const adaptedPoint = {...point,
+      'base_price': point.basePrice,
+      'date_from': new Date(point.startDate).toISOString(),
+      'date_to': new Date(point.endDate).toISOString(),
       'is_favorite': point.isFavorite,
-      'repeating_days': point.repeating,
     };
 
-    // Ненужные ключи мы удаляем
-    delete adaptedPoint.dueDate;
-    delete adaptedPoint.isArchive;
+    delete adaptedPoint.basePrice;
+    delete adaptedPoint.startDate;
+    delete adaptedPoint.endDate;
     delete adaptedPoint.isFavorite;
-    delete adaptedPoint.repeating;
 
     return adaptedPoint;
-  }
+  };
 }

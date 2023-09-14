@@ -1,20 +1,19 @@
 import Observable from '../framework/observable.js';
-import {UpdateType} from '../const.js';
+import { UpdateType } from '../const.js';
+import dayjs from 'dayjs';
 
-export default class PointsModel extends Observable {
-
+export default class PointsModel extends Observable{
   #pointsApiService = null;
   #points = [];
   #offers = [];
   #destinations = [];
 
-  constructor(service) {
+  constructor(pointsApiService) {
     super();
-    this.#pointsApiService = service;
+    this.#pointsApiService = pointsApiService;
   }
 
-  get points() {
-    console.log(this.#points);
+  get points () {
     return this.#points;
   }
 
@@ -41,7 +40,8 @@ export default class PointsModel extends Observable {
     this._notify(UpdateType.INIT);
   };
 
-  async updatePoint(updateType, update) {
+  updatePoint = async (updateType, update) => {
+
     const index = this.#points.findIndex((point) => point.id === update.id);
 
     if (index === -1) {
@@ -51,31 +51,38 @@ export default class PointsModel extends Observable {
     try {
       const response = await this.#pointsApiService.updatePoint(update);
       const updatedPoint = this.#adaptToClient(response);
+
       this.#points = [
         ...this.#points.slice(0, index),
         updatedPoint,
         ...this.#points.slice(index + 1),
       ];
+
       this._notify(updateType, updatedPoint);
+
     } catch(err) {
       throw new Error('Can\'t update point');
     }
+  };
 
-  }
+  addPoint = async (updateType, update) => {
 
-  async addPoint(updateType, update) {
     try {
       const response = await this.#pointsApiService.addPoint(update);
       const newPoint = this.#adaptToClient(response);
-      this.#points = [newPoint, ...this.#points];
-      this._notify(updateType, newPoint);
+
+      this.#points = [
+        newPoint,
+        ...this.#points,
+      ];
+      this._notify(updateType, update);
+
     } catch(err) {
       throw new Error('Can\'t add point');
     }
+  };
 
-  }
-
-  async deletePoint(updateType, update) {
+  deletePoint = async (updateType, update) => {
     const index = this.#points.findIndex((point) => point.id === update.id);
 
     if (index === -1) {
@@ -92,24 +99,23 @@ export default class PointsModel extends Observable {
     } catch(err) {
       throw new Error('Can\'t delete point');
     }
-  }
+  };
 
-  #adaptToClient(point) {
+  #adaptToClient = (point) => {
+
     const adaptedPoint = {...point,
-      dueDate: point['due_date'] !== null ? new Date(point['due_date']) : point['due_date'], // На клиенте дата хранится как экземпляр Date
-      isArchive: point['is_archived'],
+      basePrice: point['base_price'],
+      startDate: dayjs(point['date_from']),
+      endDate: dayjs(point['date_to']),
       isFavorite: point['is_favorite'],
-      repeating: point['repeating_days'],
     };
 
-    // Ненужные ключи мы удаляем
-    delete adaptedPoint['due_date'];
-    delete adaptedPoint['is_archived'];
+    delete adaptedPoint['base_price'];
+    delete adaptedPoint['date_from'];
+    delete adaptedPoint['date_to'];
     delete adaptedPoint['is_favorite'];
-    delete adaptedPoint['repeating_days'];
 
     return adaptedPoint;
-  }
-  // надо будет поправить
+  };
 
 }

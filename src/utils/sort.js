@@ -1,22 +1,14 @@
-import { SortType } from '../const.js';
-import { getPointsDateDifference, getPointsPriceDifference, getPointsDurationDifference } from './point.js';
+import dayjs from 'dayjs';
 
-if (!Array.prototype.toSorted) {
-  Array.prototype.toSorted = function (fn) {
-    return [...this].sort(fn);
-  };
-}
+const sortPointsByPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
-const sort = {
-  [SortType.DAY]: (points) => points.toSorted(getPointsDateDifference),
-  [SortType.PRICE]: (points) => points.toSorted(getPointsPriceDifference),
-  [SortType.TIME]: (points) => points.toSorted(getPointsDurationDifference),
-  [SortType.EVENT]: () => {
-    throw new Error(`Sort by ${SortType.EVENT} is not implimented`);
-  },
-  [SortType.OFFER]: () => {
-    throw new Error(`Sort by ${SortType.OFFER} is not implimented`);
-  }
+const sortPointsByDuration = (pointA, pointB) => {
+  const durationA = Math.ceil(dayjs(pointA.endDate).diff(dayjs(pointA.startDate), 'minute', true));
+  const durationB = Math.ceil(dayjs(pointB.endDate).diff(dayjs(pointB.startDate), 'minute', true));
+
+  return durationB - durationA;
 };
 
-export { sort };
+const sortPointsByDate = (pointA, pointB) => dayjs(pointA.startDate) - dayjs(pointB.startDate);
+
+export { sortPointsByPrice, sortPointsByDuration, sortPointsByDate };

@@ -13,12 +13,12 @@ const RenderPosition = {
  * @param {string} template Разметка в виде строки
  * @returns {HTMLElement} Созданный элемент
  */
-function createElement(template) {
+const createElement = (template) => {
   const newElement = document.createElement('div');
   newElement.innerHTML = template;
 
   return newElement.firstElementChild;
-}
+};
 
 /**
  * Функция для отрисовки элемента
@@ -26,7 +26,7 @@ function createElement(template) {
  * @param {HTMLElement} container Элемент в котором будет отрисован компонент
  * @param {string} place Позиция компонента относительно контейнера. По умолчанию - `beforeend`
  */
-function render(component, container, place = RenderPosition.BEFOREEND) {
+const render = (component, container, place = RenderPosition.BEFOREEND) => {
   if (!(component instanceof AbstractView)) {
     throw new Error('Can render only components');
   }
@@ -36,14 +36,14 @@ function render(component, container, place = RenderPosition.BEFOREEND) {
   }
 
   container.insertAdjacentElement(place, component.element);
-}
+};
 
 /**
  * Функция для замены одного компонента на другой
  * @param {AbstractView} newComponent Компонент, который нужно показать
  * @param {AbstractView} oldComponent Компонент, который нужно скрыть
  */
-function replace(newComponent, oldComponent) {
+const replace = (newComponent, oldComponent) => {
   if (!(newComponent instanceof AbstractView && oldComponent instanceof AbstractView)) {
     throw new Error('Can replace only components');
   }
@@ -58,13 +58,13 @@ function replace(newComponent, oldComponent) {
   }
 
   parent.replaceChild(newElement, oldElement);
-}
+};
 
 /**
  * Функция для удаления компонента
  * @param {AbstractView} component Компонент, который нужно удалить
  */
-function remove(component) {
+const remove = (component) => {
   if (component === null) {
     return;
   }
@@ -75,6 +75,6 @@ function remove(component) {
 
   component.element.remove();
   component.removeElement();
-}
+};
 
 export {RenderPosition, createElement, render, replace, remove};

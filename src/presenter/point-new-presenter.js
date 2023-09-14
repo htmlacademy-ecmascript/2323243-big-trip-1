@@ -1,8 +1,8 @@
-import { render, remove, RenderPosition } from '../framework/render.js';
-import { UserAction, UpdateType, EditType } from '../const.js';
+import { remove, render, RenderPosition } from '../framework/render.js';
 import PointEditView from '../view/point-edit-view.js';
+import { UserAction, UpdateType } from '../const.js';
 
-export default class NewPointPresenter {
+export default class PointNewPresenter {
   #pointListContainer = null;
   #changeData = null;
   #pointEditComponent = null;
