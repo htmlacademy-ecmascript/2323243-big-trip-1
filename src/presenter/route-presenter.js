@@ -5,7 +5,7 @@ import LoadingView from '../view/loading-view.js';
 import PointListView from '../view/point-list-view.js';
 import PointSortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
-import PointNewPresenter from './point-new-presenter.js';
+import PointNewPresenter from './new-point-presenter.js';
 import { Filter } from '../utils/filter.js';
 import { SortType, UpdateType, UserAction, FilterType, TimeLimit } from '../const.js';
 import { sortPointsByPrice, sortPointsByDuration, sortPointsByDate } from '../utils/sort.js';
