@@ -7,8 +7,8 @@ import FilterPresenter from './presenter/filter-presenter.js';
 import TripInfoPresenter from './presenter/trip-info-presenter.js';
 import PointsApiService from './points-api-service.js';
 
-const AUTHORIZATION = 'Basic tS7JfS35wdl2sf5l';
-const END_POINT = 'https://18.ecmascript.pages.academy/big-trip';
+const AUTHORIZATION = 'Basic qwerty123456789';
+const END_POINT = 'https://20.ecmascript.pages.academy/big-trip';
 
 const headerElement = document.querySelector('.page-header');
 const mainElement = document.querySelector('.page-body__page-main');
