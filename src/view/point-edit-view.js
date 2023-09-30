@@ -55,7 +55,7 @@ const createPointEditTemplate = (point, allOffers, allDestinations) => {
   const allOffersForType = findOffersForType(type, allOffers);
 
   const deletingPoint = isDeleting ? 'Deleting...' : 'Delete';
-
+  console.log(selectedDestinationData,selectedDestinationName);
   return (
     `<li class="trip-events__item">
      <form class="event event--edit" action="#" method="post">
@@ -77,7 +77,7 @@ const createPointEditTemplate = (point, allOffers, allDestinations) => {
           <label class="event__label  event__type-output" for="event-destination-1">
           ${capitalizeFirstLetter(type)}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(selectedDestinationName)}" list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${selectedDestinationName ? he.encode(selectedDestinationName) : ''}" list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
           <datalist id="destination-list-1">
             ${createDestionationsOptionsTemplate(allDestinations)}
           </datalist>
@@ -109,7 +109,7 @@ const createPointEditTemplate = (point, allOffers, allDestinations) => {
           ${createAvailableOptionsTemplate(offers, allOffersForType)}
           </div>
         </section>
-        <section class="event__section  event__section--destination ${selectedDestinationData.description !== '' ? 'visually-hidden' : ''}">
+        <section class="event__section  event__section--destination ${!selectedDestinationData.description || !selectedDestinationName ? 'visually-hidden' : ''}">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${selectedDestinationData.description}</p>
           ${(!selectedDestinationData.pictures) ? '' : createPhotosListTemplate(selectedDestinationData.pictures)}
@@ -286,9 +286,9 @@ export default class PointEditView extends AbstractStatefulView {
 
   #priceToggleHandler = (evt) => {
     evt.preventDefault();
-
+    const price = parseInt(evt.target.value, 10);
     this.updateElement({
-      basePrice: parseInt(evt.target.value, 10)
+      basePrice: isNaN(price) ? 0 : price
     });
   };
 
@@ -306,7 +306,7 @@ export default class PointEditView extends AbstractStatefulView {
 
 
   static parsePointToState = (point, allOffers, allDestinations) => ({...point,
-    selectedDestinationName: allDestinations.find((item) => (item.id === point.destination)).name,
+    selectedDestinationName: allDestinations.find((item) => (item.id === point.destination))?.name,
     availableOffersId: allOffers.find((item) => (item.type === point.type)).offers,
     isDisabled: false,
     isSaving: false,
