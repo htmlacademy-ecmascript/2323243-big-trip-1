@@ -29,7 +29,6 @@ const NEW_POINT = {
   basePrice: 0,
   startDate: dayjs(),
   endDate: dayjs(),
-  destination: 1,
   isFavorite: false,
   offers: [],
   type: 'taxi',
