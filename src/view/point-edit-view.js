@@ -55,7 +55,7 @@ const createPointEditTemplate = (point, allOffers, allDestinations) => {
   const allOffersForType = findOffersForType(type, allOffers);
 
   const deletingPoint = isDeleting ? 'Deleting...' : 'Delete';
-  console.log(selectedDestinationData,selectedDestinationName);
+
   return (
     `<li class="trip-events__item">
      <form class="event event--edit" action="#" method="post">
