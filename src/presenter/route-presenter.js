@@ -9,7 +9,7 @@ import PointNewPresenter from './new-point-presenter.js';
 import { Filter } from '../utils/filter.js';
 import { SortType, UpdateType, UserAction, FilterType, TimeLimit } from '../const.js';
 import { sortPointsByPrice, sortPointsByDuration, sortPointsByDate } from '../utils/sort.js';
-
+import ErrorView from '../view/error-view.js';
 
 export default class RoutePresenter {
   #routeContainer = null;
@@ -19,6 +19,7 @@ export default class RoutePresenter {
 
   #pointListComponent = new PointListView();
   #loadingComponent = new LoadingView();
+  #errorComponent = new ErrorView();
   #emptyListComponent = null;
 
   #pointPresenter = new Map();
@@ -27,6 +28,7 @@ export default class RoutePresenter {
   #filterType = FilterType.EVERYTHING;
   #isLoading = true;
   #uiBlocker = new UiBlocker(TimeLimit.LOWER_LIMIT, TimeLimit.UPPER_LIMIT);
+  #isError = false;
 
   constructor(routeContainer, pointsModel, filterModel) {
 
@@ -136,6 +138,12 @@ export default class RoutePresenter {
         remove(this.#loadingComponent);
         this.#renderBoard();
         break;
+      case UpdateType.ERRORINIT:
+        this.#isLoading = false;
+        this.#isError = true;
+        remove(this.#loadingComponent);
+        this.#renderBoard();
+        break;
       default:
         throw new Error(`Update Type ${updateType} is undefined.`);
     }
@@ -181,13 +189,21 @@ export default class RoutePresenter {
     render(this.#loadingComponent, this.#routeContainer);
   };
 
+  #renderError = () => {
+    render(this.#errorComponent, this.#routeContainer);
+  };
+
   #renderBoard = () => {
     const points = this.points;
     const pointsCount = points.length;
     render(this.#pointListComponent, this.#routeContainer);
-
     if (this.#isLoading) {
       this.#renderLoading();
+      return;
+    }
+
+    if (this.#isError) {
+      this.#renderError();
       return;
     }
 
@@ -195,6 +211,7 @@ export default class RoutePresenter {
       this.#renderEmptyList();
       return;
     }
+
 
     this.#renderSort();
 
