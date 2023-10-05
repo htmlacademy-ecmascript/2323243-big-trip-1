@@ -23,6 +23,7 @@ const UpdateType = {
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
   INIT: 'INIT',
+  ERRORINIT: 'ERRORINIT',
 };
 
 const NEW_POINT = {
