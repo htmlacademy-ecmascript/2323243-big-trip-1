@@ -41,7 +41,7 @@ const createPointSortTemplate = (sortType) => (
 </form>`
 );
 
-export default class PointSortView extends AbstractView {
+export default class SortView extends AbstractView {
   #sortType = null;
 
   constructor(sortType) {

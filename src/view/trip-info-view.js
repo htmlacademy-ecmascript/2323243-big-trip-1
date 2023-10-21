@@ -17,15 +17,10 @@ const getTripDestinationNames = (points) => {
 
   const tripDestinationNames = points.map((point) => point.destinationName);
 
-  switch (tripDestinationNames.length) {
-    case 1:
-      return `${tripDestinationNames[0]}`;
-    case 2:
-      return `${tripDestinationNames[0]} &mdash; ${tripDestinationNames[1]}`;
-    case 3:
-      return `${tripDestinationNames[0]} &mdash; ${tripDestinationNames[1]} &mdash; ${tripDestinationNames[2]}`;
-    default:
-      return `${tripDestinationNames[0]} &mdash; ... &mdash;${tripDestinationNames[tripDestinationNames.length - 1]}`;
+  if (tripDestinationNames.length <= 3) {
+    return tripDestinationNames.join ('&mdash;');
+  }else{
+    return `${tripDestinationNames[0]} &mdash; ... &mdash;${tripDestinationNames[tripDestinationNames.length - 1]}`;
   }
 
 };

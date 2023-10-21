@@ -1,5 +1,5 @@
 import { render } from './framework/render.js';
-import NewPointButtonView from './view/new-point-btn-view.js';
+import NewPointButtonView from './view/new-point-button-view.js';
 import FilterModel from './model/filter-model.js';
 import PointsModel from './model/points-model.js';
 import RoutePresenter from './presenter/route-presenter.js';
@@ -18,19 +18,20 @@ const tripEventsElement = mainElement.querySelector('.trip-events');
 
 const pointsModel = new PointsModel(new PointsApiService(END_POINT, AUTHORIZATION));
 const filterModel = new FilterModel();
-const routePresenter = new RoutePresenter(tripEventsElement, pointsModel, filterModel);
+const newPointButtonComponent = new NewPointButtonView();
+const routePresenter = new RoutePresenter(tripEventsElement, pointsModel, filterModel, newPointButtonComponent);
 const filterPresenter = new FilterPresenter(tripControlsElement, filterModel, pointsModel);
 const tripInfoPresenter = new TripInfoPresenter(tripMainElement, pointsModel);
-const newPointButtonComponent = new NewPointButtonView();
+
 
 const handleNewPointFormClose = () => {
-  newPointButtonComponent.element.disabled = false;
+  newPointButtonComponent.setDisabled(false);
 };
 
 const handleNewPointButtonClick = () => {
   routePresenter.createPoint(handleNewPointFormClose);
 
-  newPointButtonComponent.element.disabled = true;
+  newPointButtonComponent.setDisabled(true);
 };
 
 

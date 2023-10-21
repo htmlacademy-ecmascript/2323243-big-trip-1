@@ -1,15 +1,14 @@
 import { render, remove, RenderPosition } from '../framework/render.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
-import EmptyListView from '../view/empty-list-view.js';
 import LoadingView from '../view/loading-view.js';
 import PointListView from '../view/point-list-view.js';
 import PointSortView from '../view/sort-view.js';
 import PointPresenter from './point-presenter.js';
 import PointNewPresenter from './new-point-presenter.js';
 import { Filter } from '../utils/filter.js';
-import { SortType, UpdateType, UserAction, FilterType, TimeLimit } from '../const.js';
+import { SortType, UpdateType, UserAction, FilterType, TimeLimit, ErrorMessage, EmptyListTextType } from '../const.js';
 import { sortPointsByPrice, sortPointsByDuration, sortPointsByDate } from '../utils/sort.js';
-import ErrorView from '../view/error-view.js';
+import InfoMessageView from '../view/info-message-view.js';
 
 export default class RoutePresenter {
   #routeContainer = null;
@@ -19,7 +18,7 @@ export default class RoutePresenter {
 
   #pointListComponent = new PointListView();
   #loadingComponent = new LoadingView();
-  #errorComponent = new ErrorView();
+  #errorComponent = new InfoMessageView(ErrorMessage);
   #emptyListComponent = null;
 
   #pointPresenter = new Map();
@@ -29,12 +28,14 @@ export default class RoutePresenter {
   #isLoading = true;
   #uiBlocker = new UiBlocker(TimeLimit.LOWER_LIMIT, TimeLimit.UPPER_LIMIT);
   #isError = false;
+  #newPointButtonComponent = null;
 
-  constructor(routeContainer, pointsModel, filterModel) {
+  constructor(routeContainer, pointsModel, filterModel, newPointButtonComponent) {
 
     this.#routeContainer = routeContainer;
     this.#pointsModel = pointsModel;
     this.#filterModel = filterModel;
+    this.#newPointButtonComponent = newPointButtonComponent;
 
     this.#pointNewPresenter = new PointNewPresenter(this.#pointListComponent.element, this.#handleViewAction);
 
@@ -171,7 +172,7 @@ export default class RoutePresenter {
 
 
   #renderEmptyList = () => {
-    this.#emptyListComponent = new EmptyListView(this.#filterType);
+    this.#emptyListComponent = new InfoMessageView(EmptyListTextType[this.#filterType]);
     render(this.#emptyListComponent, this.#routeContainer);
   };
 
@@ -204,6 +205,7 @@ export default class RoutePresenter {
 
     if (this.#isError) {
       this.#renderError();
+      this.#newPointButtonComponent.setDisabled(true);
       return;
     }
 

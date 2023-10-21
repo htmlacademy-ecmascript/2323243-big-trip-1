@@ -40,4 +40,12 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
-export { NEW_POINT, FilterType, SortType, UserAction, UpdateType, TimeLimit };
+const EmptyListTextType = {
+  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
+  [FilterType.FUTURE]: 'There are no future events now',
+  [FilterType.PAST]: 'There are no past events now',
+};
+
+const ErrorMessage = 'Server is temporary unavailable';
+
+export { NEW_POINT, FilterType, SortType, UserAction, UpdateType, TimeLimit, EmptyListTextType, ErrorMessage };
