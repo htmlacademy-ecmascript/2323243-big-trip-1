@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="q354sB6O9fcLH6xUbpZV" name="Page-1">
-        <mxGraphModel dx="1487" dy="507" grid="1" gridSize="7" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+        <mxGraphModel dx="1487" dy="352" grid="1" gridSize="7" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -50,7 +50,7 @@
                     <mxGeometry x="49" y="315" width="98" height="49" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="&lt;b&gt;вызывается&lt;/b&gt;" style="text;strokeColor=#82b366;align=center;fillColor=#d5e8d4;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="0.75" y="98" width="103.5" height="30" as="geometry"/>
+                    <mxGeometry x="-14" y="98" width="103.5" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="&lt;b&gt;с параметром&lt;/b&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="144.25" y="98" width="103.5" height="30" as="geometry"/>
