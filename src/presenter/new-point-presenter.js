@@ -34,19 +34,6 @@ export default class PointNewPresenter {
     document.addEventListener('keydown', this.#escKeyDownHandler);
   };
 
-  destroy = () => {
-    if (this.#pointEditComponent === null) {
-      return;
-    }
-
-    this.#destroyCallback?.();
-
-    remove(this.#pointEditComponent);
-    this.#pointEditComponent = null;
-
-    document.removeEventListener('keydown', this.#escKeyDownHandler);
-  };
-
   setSaving = () => {
     this.#pointEditComponent.updateElement(
       {
@@ -76,10 +63,25 @@ export default class PointNewPresenter {
     );
   };
 
+
   #handlePointDelete = () => {
     this.destroy();
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
+
+  destroy = () => {
+    if (this.#pointEditComponent === null) {
+      return;
+    }
+
+    this.#destroyCallback?.();
+
+    remove(this.#pointEditComponent);
+    this.#pointEditComponent = null;
+
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
 
   #handlePointClick = () => {
     this.destroy();

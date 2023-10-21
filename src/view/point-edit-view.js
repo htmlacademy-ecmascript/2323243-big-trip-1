@@ -6,7 +6,7 @@ import he from 'he';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const findOffersForType = (pointType, allOffers) => allOffers.find(({ type }) => type === pointType).offers;
+const findOffersForType = (pointType, allOffers) => allOffers.find(({ type }) => type === pointType)?.offers || [];
 
 const createDestionationsOptionsTemplate = (allDestinations) => allDestinations.map(({ name }) => `<option value="${name}"></option>`).join('\n');
 
@@ -98,22 +98,24 @@ const createPointEditTemplate = (point, allOffers, allDestinations) => {
         </div>
         <button class="event__save-btn  btn  btn--blue" type="submit" ${isSubmitDisabledByDate(startDate, endDate) ? '' : 'disabled'} ${isSubmitDisabledByPrice(basePrice) ? '' : 'disabled'} ${isSubmitDisabledByDestinationName(selectedDestinationName, allDestinations) ? '' : 'disabled'} ${isDisabled ? 'disabled' : ''}> ${isSaving ? 'Saving...' : 'Save'}</button>
         <button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>${!point.id ? 'Cancel' : deletingPoint} </button>
-        <button class="event__rollup-btn" type="button" ${isDisabled ? 'disabled' : ''}>
+        ${point.id ? `<button class="event__rollup-btn" type="button" ${isDisabled ? 'disabled' : ''}>
           <span class="visually-hidden">Open event</span>
-        </button>
+        </button>` : ''}
       </header>
       <section class="event__details">
-        <section class="event__section  event__section--offers ${!allOffersForType.length ? 'visually-hidden' : ''}">
+      ${!allOffersForType.length ? '' :
+      `<section class="event__section  event__section--offers }">
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
           <div class="event__available-offers">
           ${createAvailableOptionsTemplate(offers, allOffersForType)}
           </div>
-        </section>
-        <section class="event__section  event__section--destination ${!selectedDestinationData.description || !selectedDestinationName ? 'visually-hidden' : ''}">
+        </section>`}
+        ${!selectedDestinationData.description || !selectedDestinationName ? '' :
+      `<section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${selectedDestinationData.description}</p>
           ${(!selectedDestinationData.pictures) ? '' : createPhotosListTemplate(selectedDestinationData.pictures)}
-        </section>
+        </section>`}
       </section>
     </form>
     </li>`
@@ -173,7 +175,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   setPointRollUpHandler = (callback) => {
     this._callback.pointRollUp = callback;
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#pointRollUpHandler);
+    this.element.querySelector('.event__rollup-btn')?.addEventListener('click', this.#pointRollUpHandler);
   };
 
   setPointSaveHandler = (callback) => {
@@ -221,7 +223,7 @@ export default class PointEditView extends AbstractStatefulView {
   #setInnerHandlers = () => {
     this.element.querySelector('.event__input--destination').addEventListener('change', this.#destinationToggleHandler);
     this.element.querySelector('.event__type-group').addEventListener('click', this.#typeToggleHandler);
-    this.element.querySelector('.event__available-offers').addEventListener('change', this.#offerToggleHandler);
+    this.element.querySelector('.event__available-offers')?.addEventListener('change', this.#offerToggleHandler);
     this.element.querySelector('.event__input--price').addEventListener('change', this.#priceToggleHandler);
   };
 
@@ -307,7 +309,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   static parsePointToState = (point, allOffers, allDestinations) => ({...point,
     selectedDestinationName: allDestinations.find((item) => (item.id === point.destination))?.name,
-    availableOffersId: allOffers.find((item) => (item.type === point.type)).offers,
+    availableOffersId: allOffers.find((item) => (item.type === point.type))?.offers || [],
     isDisabled: false,
     isSaving: false,
     isDeleting: false,
@@ -315,7 +317,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   static parseStateToPoint = (state, allDestinations) => {
     const point = {...state};
-    point.destination = allDestinations.find((item) => (item.name === point.selectedDestinationName)).id;
+    point.destination = allDestinations.find((item) => (item.name === point.selectedDestinationName))?.id;
 
     delete point.selectedDestinationName;
     delete point.availableOffersId;
