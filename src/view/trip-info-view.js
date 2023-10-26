@@ -12,16 +12,17 @@ const addOffersPrices = (pointType, pointOffers, allOffers) => {
 };
 
 const addDestinationName = (pointDestination, allDestinations) => allDestinations.find(({ id }) => id === pointDestination).name;
-
+const MAX_DISPLAYED_TITLES = 3;
 const getTripDestinationNames = (points) => {
 
   const tripDestinationNames = points.map((point) => point.destinationName);
 
-  if (tripDestinationNames.length <= 3) {
+  if (tripDestinationNames.length <= MAX_DISPLAYED_TITLES) {
     return tripDestinationNames.join ('&mdash;');
-  }else{
-    return `${tripDestinationNames[0]} &mdash; ... &mdash;${tripDestinationNames[tripDestinationNames.length - 1]}`;
   }
+
+  return `${tripDestinationNames[0]} &mdash; ... &mdash;${tripDestinationNames[tripDestinationNames.length - 1]}`;
+
 
 };
 
