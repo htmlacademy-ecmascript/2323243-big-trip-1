@@ -44,25 +44,27 @@ export default class ApiService {
   /**
    * Метод для обработки ответа
    * @param {Response} response Объект ответа
-   * @returns {Promise<JSON>}
+   * @returns {Promise}
    */
-  static parseResponse = (response) => response.json();
+  static parseResponse(response) {
+    return response.json();
+  }
 
   /**
    * Метод для проверки ответа
    * @param {Response} response Объект ответа
    */
-  static checkStatus = (response) => {
+  static checkStatus(response) {
     if (!response.ok) {
       throw new Error(`${response.status}: ${response.statusText}`);
     }
-  };
+  }
 
   /**
    * Метод для обработки ошибок
    * @param {Error} err Объект ошибки
    */
-  static catchError = (err) => {
+  static catchError(err) {
     throw err;
-  };
+  }
 }
